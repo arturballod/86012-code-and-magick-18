@@ -70,12 +70,12 @@ var renderHist = function (ctx, players, times) {
 
   players.forEach(function (name, i) {
     var barColor = name === 'Вы' ? MY_COLOR : makeRandomColor();
-    var barFinalHeight = (barHeight * times[i]) / maxTime;
+    var barFinalHeight = ((barHeight * times[i]) / maxTime) * -1;
     var barPos = barX + (barStep * i);
     var counterY = CLOUD_HEIGHT - (barFinalHeight + GAP + FONT_HEIGHT + FONT_GAP);
 
     ctx.fillStyle = barColor;
-    ctx.fillRect(barPos, barY, BAR_WIDTH, -barFinalHeight);
+    ctx.fillRect(barPos, barY, BAR_WIDTH, barFinalHeight);
     ctx.fillText(players[i], barPos, textY);
     ctx.fillText(Math.floor(times[i]), barPos, counterY);
   });
