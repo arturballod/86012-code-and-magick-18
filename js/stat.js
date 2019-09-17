@@ -51,14 +51,19 @@ window.renderStatistics = function (ctx, players, times) {
   ctx.fillText('Список победителей:', CLOUD_X + (GAP * 2), CLOUD_Y + (GAP * 2) + TEXT_HEIGHT + FONT_GAP);
 
   var maxTime = getMaxElement(times);
-  var myNameIndex = players.indexOf('Вы');
 
   for (var i = 0; i < players.length; i++) {
-    ctx.fillStyle = '#000';
+    if (players[i] === 'Вы') {
+      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+    } else {
+      ctx.fillStyle = 'hsl(210, ' + Math.floor(Math.random() * 100) + '%, 50%)';
+    }
+
+    var barFinalHeight = (barHeight * times[i]) / maxTime;
+    var counterY = CLOUD_HEIGHT - (barFinalHeight + GAP + TEXT_HEIGHT + FONT_GAP);
+
+    ctx.fillRect(CLOUD_X + MARGIN + (BAR_WIDTH + BAR_GAP) * i, barY, BAR_WIDTH, -barFinalHeight);
     ctx.fillText(players[i], CLOUD_X + MARGIN + (BAR_WIDTH + BAR_GAP) * i, textY);
-    ctx.fillStyle = 'hsl(210, ' + Math.floor(Math.random() * 101) + '%, 50%)';
-    ctx.fillRect(CLOUD_X + MARGIN + (BAR_WIDTH + BAR_GAP) * i, barY, BAR_WIDTH, -((barHeight * times[i]) / maxTime));
-    var counterY = CLOUD_HEIGHT - ((barHeight * times[i]) / maxTime + GAP + TEXT_HEIGHT + FONT_GAP);
     ctx.fillText(Math.floor(times[i]), CLOUD_X + MARGIN + (BAR_WIDTH + BAR_GAP) * i, counterY);
   }
 };
